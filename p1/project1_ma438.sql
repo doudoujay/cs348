@@ -1,5 +1,5 @@
 ----Query1
-select ProductName, avg(Discount) as AverageDiscount
+select ProductName, to_char(avg(Discount), 99.99) as AverageDiscount
 from Product,OrderItems
 where Product.ProductId = OrderItems.ProductId
 group by ProductName
@@ -18,7 +18,7 @@ inner join Inventory on Inventory.ProductId = Product.ProductId
 where Inventory.TotalStock = 0
 order by ProductId;
 ----Query4
-select CustomerId,lastName, avg(Discount) as AverageDiscount
+select CustomerId,lastName, to_char(avg(Discount), 99.99) as AverageDiscount
 from
 (select Customer.CustomerId, Customer.lastName, OrderItems.Discount
 from Customer
@@ -43,7 +43,7 @@ order by FirstName;
 ----Query7
 select *
 from
-(select CustomerId, sum(UnitPrice) as Revenue
+(select CustomerId, to_char(sum(UnitPrice), 99.99) as Revenue
 from Orders
 inner join OrderItems on Orders.OrderId = OrderItems.OrderId
 group by CustomerId
@@ -62,7 +62,7 @@ group by Category
 order by DistinctNumberOfCustomers desc)
 where rownum <= 3;
 ----Query9
-select FirstName, lastName, OrderItems.OrderId, (UnitPrice * (1 - Discount / 100) * Quantity) as TotalAmount
+select FirstName, lastName, OrderItems.OrderId, to_char((UnitPrice * (1 - Discount / 100) * Quantity), 99.99) as TotalAmount
 from Customer
 inner join Orders on Customer.CustomerId = Orders.CustomerId
 inner join OrderItems on OrderItems.OrderId = Orders.OrderId
