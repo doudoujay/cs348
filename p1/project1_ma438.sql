@@ -1,7 +1,7 @@
 ----Query1
-select ProductName, to_char(avg(Discount), 99.99) as AverageDiscount
-from Product,OrderItems
-where Product.ProductId = OrderItems.ProductId
+select ProductName, to_char(avg(NVL(Discount, 0)), 99.99) as AverageDiscount
+from Product
+full outer join OrderItems on Product.ProductId = OrderItems.ProductId
 group by ProductName
 order by AverageDiscount desc;
 ----Query2
@@ -76,4 +76,4 @@ from Supplier
 inner join Product on Product.SupplierId = Supplier.SupplierId
 group by Supplier.SupplierId, Supplier.LastName)
 where NumberOfDifferentProducts >= 3
-order by NumberOfDifferentProducts;
+order by NumberOfDifferentProducts desc;
